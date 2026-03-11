@@ -152,7 +152,7 @@ runs:
       env:
         KUBE_CONFIG: ${{ inputs.kubeconfig }}
       with:
-        args: -n ${{inputs.kube-namespace-prefix}}-${{env.CONSULENV}} set image ${{inputs.kube-resource}}:worker *=${{inputs.registry}}/${{inputs.image-name}}:${{env.TAG}}
+        args: -n ${{inputs.kube-namespace-prefix}}-${{env.CONSULENV}} set image ${{inputs.kube-resource}}-worker *=${{inputs.registry}}/${{inputs.image-name}}:${{env.TAG}}
     
     - name: Use Consul
       uses: docker://consul:1.11.2
