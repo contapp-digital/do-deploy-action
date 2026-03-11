@@ -145,6 +145,14 @@ runs:
         KUBE_CONFIG: ${{ inputs.kubeconfig }}
       with:
         args: -n ${{inputs.kube-namespace-prefix}}-${{env.CONSULENV}} set image ${{inputs.kube-resource}} *=${{inputs.registry}}/${{inputs.image-name}}:${{env.TAG}}
+
+    - name: Set K8s worker resource image
+      if: ${{inputs.kubeconfig && inputs.kube-resource && hashFiles('apps/${{inputs.image-name}}/worker.json') != ''}}
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ inputs.kubeconfig }}
+      with:
+        args: -n ${{inputs.kube-namespace-prefix}}-${{env.CONSULENV}} set image ${{inputs.kube-resource}}:worker *=${{inputs.registry}}/${{inputs.image-name}}:${{env.TAG}}
     
     - name: Use Consul
       uses: docker://consul:1.11.2
